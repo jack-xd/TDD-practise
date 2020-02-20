@@ -1,53 +1,41 @@
 package fizzBuzz;
 
-import org.junit.*;
+import org.hamcrest.core.IsEqual;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.List;
-
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.BaseMatcher.*;
 
 public class FizzBuzzTest {
 
-    private PrintStream console = null;
-    private ByteArrayOutputStream bytes = null;
-    private FizzBuzz fizzBuzz = new FizzBuzz();
+    @Test
+    public void should_print_1_given_index_1 (){
 
-    @Before
-    public void setUp() {
-
-        bytes = new ByteArrayOutputStream();//把标准输出指定到ByteArrayOutputStream中
-        console = System.out;// 获取System.out 输出流的句柄
-        System.setOut(new PrintStream(bytes));//将原本输出到控制台Console的字符流重定向到bytes
-        fizzBuzz.printFizzBuzz();
-    }
-
-    @After
-    public void tearDown() {
-        System.setOut(console);
+        Assert.assertThat(FizzBuzz.getStringByIndex(1),IsEqual.equalTo("1"));
     }
 
     @Test
-    public void should_print_1() {
-        assertThat(bytes.toString(), containsString("1"));
+    public void should_print_Fizz_given_index_3 () {
+        Assert.assertThat(FizzBuzz.getStringByIndex(3),IsEqual.equalTo("Fizz"));
     }
 
     @Test
-    public void should_print_fizz() {
-        assertThat(bytes.toString(), containsString("Fizz"));
+    public void should_print_Buzz_given_index_5 () {
+        Assert.assertThat(FizzBuzz.getStringByIndex(5),IsEqual.equalTo(("Buzz")));
     }
 
     @Test
-    public void should_print_Buzz() {
-        assertThat(bytes.toString(), containsString("Buzz"));
+    public void should_print_FizzBuzz_given_index_15 () {
+        Assert.assertThat(FizzBuzz.getStringByIndex(15),IsEqual.equalTo("FizzBuzz"));
     }
 
     @Test
-    public void should_print_FizzBuzz() {
-        assertThat(bytes.toString(), containsString("FizzBuzz"));
+    public void should_print_index_from_1_to_100 () {
+        ByteArrayOutputStream content = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(content));
+        FizzBuzz.printAllString(1,100);
+        String[] results = content.toString().split("\n");
+        Assert.assertThat(results.length,IsEqual.equalTo(100));
     }
-
 }
