@@ -1,21 +1,20 @@
 package fizzBuzz;
 
 public class Game {
+    private int number;
 
-    private int myNumber;
+    public Game( int number ) {
+
+        this.number = number;
+    }
 
     @Override
     public String toString() {
-        if (myNumber%15 == 0) return "fizzbuzz";
-        if (myNumber%3 == 0) return "fizz";
-        if (myNumber%5 == 0) return "buzz";
 
-        return String.valueOf(myNumber);
+        if(number%15==0) return "fizzbuzz";
+        if(number%3==0) return "fizz";
+        if(number%5==0) return "buzz";
+        return String.valueOf(number);
+
     }
-
-    public Game( int rawNumber ) {
-        this.myNumber = rawNumber;
-    }
-
-
 }

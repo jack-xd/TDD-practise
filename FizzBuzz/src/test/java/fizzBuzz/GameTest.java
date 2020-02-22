@@ -1,37 +1,34 @@
 package fizzBuzz;
 
-import static org.hamcrest.core.Is.is;
-
-import static org.junit.Assert.assertThat;
+import org.hamcrest.core.IsEqual;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class GameTest {
-
     @Test
-    public void should_print_raw_given_normal_number() {
-
-        checkGameNumber("1", 1);
-        checkGameNumber("2", 2);
+    public void should_print_number_given_normal_number() {
+        testEquals(1, "1");
+        testEquals(4, "4");
 
     }
 
-    @Test
-    public void should_print_fizz_given_number_divisible_by_3() {
-
-        checkGameNumber("fizz",3);
+    private void testEquals( int i, String s ) {
+        Assert.assertThat(new Game(i).toString(), IsEqual.equalTo(s));
     }
 
     @Test
-    public void should_print_buzz_given_number_divisible_by_5() {
-        checkGameNumber("buzz",5);
+    public void should_print_fizz_given_number_divided_by_3() {
+
+        testEquals(3,"fizz");
     }
 
     @Test
-    public void should_print_fizzbuzz_given_number_divisible_by_15() {
-        checkGameNumber("fizzbuzz",15);
+    public void should_print_fizzbuzz_given_number_divided_by_15() {
+        testEquals(15,"fizzbuzz");
     }
 
-    private void checkGameNumber( String s, int i ) {
-        assertThat(new Game(i).toString(),is(s));
+    @Test
+    public void should_print_buzz_given_number_divided_by_5() {
+        testEquals(5,"buzz");
     }
 }
