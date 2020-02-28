@@ -10,6 +10,7 @@ public class Myschema {
     List<String> myFlags = new ArrayList<>();
     Map<String,String> myFlagTypeMaps = new HashMap<>();
     Map<String,String> myFlagDescMaps = new HashMap<>();
+    Map<String,String> myFlagDefaultValues = new HashMap<>();
 
 
     public boolean setFlagByFlagname( String flagname ) {
@@ -29,6 +30,17 @@ public class Myschema {
             return false;
 
         myFlagTypeMaps.put(flagname,flagtype);
+        switch (flagtype){
+            case "boolean":
+                myFlagDefaultValues.put(flagname,"false");
+                break;
+            case "int":
+                myFlagDefaultValues.put(flagname,"0");
+                break;
+            case "string":
+                myFlagDefaultValues.put(flagname,"");
+                break;
+        }
         return true;
     }
 
@@ -46,5 +58,9 @@ public class Myschema {
 
         myFlagDescMaps.put(flagname,flagdesc);
         return true;
+    }
+
+    public String getDefaultValueByFlagname( String flagname ) {
+        return myFlagDefaultValues.get(flagname);
     }
 }
