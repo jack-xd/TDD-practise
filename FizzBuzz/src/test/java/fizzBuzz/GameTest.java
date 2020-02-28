@@ -14,6 +14,7 @@ public class GameTest {
         "'fizz',3",
         "'buzz',5",
         "'fizzbuzz',15",
+
     })
     void ptest(String word, int index){
         assertEquals(word, new Game(index).toString() );
