@@ -1,45 +1,35 @@
 package com.jack;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Schema {
-    List<Flag> flags;
+    private final String schemaConfig;
+    private Map<String,String> schemas;
 
-    public Schema( String schemaText ) {
-        String[] flagdescs = schemaText.split(";");
-        flags = new ArrayList<>();
-        for(String desc:flagdescs){
-            flags.add(parseFlag(desc));
+    public Schema( String schema ) {
+        this.schemaConfig = schema;
+        schemas = new HashMap<>();
+        Arrays.asList(schema.split(";"))
+                .stream()
+                .forEach(flag->{
+                    String[] nameValue = flag.split(":");
+                    schemas.put(nameValue[0],nameValue[1]);
+                });
+    }
+
+    public Object getValue( String flag, String strValue) {
+        String type = schemas.get(flag);
+        switch (type){
+            case "boolean":
+                return "true".equalsIgnoreCase(strValue);
+            case "int":
+                return Integer.parseInt(strValue);
+            case "string":
+                return strValue;
+
         }
-    }
-
-    private Flag parseFlag( String desc ) {
-        Flag flag = new Flag();
-        flag.setFlagdesc(desc);
-        String[] strs = desc.split(":");
-        flag.setFlagname(strs[0]);
-        flag.setFlagtype(strs[1]);
-        return flag;
-    }
-
-    public List<Flag> getFlags() {
-        return flags;
-    }
-
-    public String getFlagDesc( String flagname ) {
-        for (Flag flag : flags)
-            if(flagname.equals(flag.getFlagname()))
-                return flag.getFlagdesc();
-
-        return "";
-    }
-
-    public String getFlagType( String flagname ) {
-        for (Flag flag : flags)
-            if(flagname.equals((flag.getFlagname())))
-                return flag.getFlagtype();
-
-        return "";
+        return strValue;
     }
 }
