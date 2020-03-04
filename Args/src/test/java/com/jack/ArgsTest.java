@@ -12,4 +12,7 @@ public class ArgsTest {
         assertEquals(new Integer(80),args.getValue("-p") );
         assertEquals("/root", args.getValue("-d") );
     }
+
+
+
 }

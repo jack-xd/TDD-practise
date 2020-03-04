@@ -11,8 +11,20 @@ public class Command {
         this.commandLine = commandLine;
         commands = new HashMap<>();
         String[] commandLines = commandLine.split("\\s+");
-        for(int i=0;i<commandLines.length;i++)
-            commands.put(commandLines[i],commandLines[++i]);
+        String flag = null;
+        String value = null;
+        for(int i=0;i<commandLines.length;i++){
+            if (isFlag(commandLines[i]))
+                flag = commandLines[i];
+            if (i<commandLines.length-1 && !isFlag(commandLines[i+1]))
+                value = commandLines[++i];
+
+            commands.put(flag,value);
+        }
+    }
+
+    private boolean isFlag( String str ) {
+        return str.startsWith("-");
     }
 
     public String getValue( String flag ) {

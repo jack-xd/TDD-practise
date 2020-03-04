@@ -20,7 +20,10 @@ public class Schema {
     }
 
     public Object getValue( String flag, String strValue) {
+        if (isNullString(strValue)) return null;
+
         String type = schemas.get(flag);
+        if (isNullString(type)) return null;
         switch (type){
             case "boolean":
                 return "true".equalsIgnoreCase(strValue);
@@ -28,8 +31,14 @@ public class Schema {
                 return Integer.parseInt(strValue);
             case "string":
                 return strValue;
+            case "list":
+                return Arrays.asList(strValue.split(","));
 
         }
         return strValue;
+    }
+
+    private boolean isNullString( String strValue ) {
+        return (null == strValue) || strValue.length()==0;
     }
 }
