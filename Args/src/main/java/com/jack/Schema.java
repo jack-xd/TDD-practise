@@ -5,40 +5,45 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Schema {
-    private final String schemaConfig;
-    private Map<String,String> schemas;
+
+    Map<String, String> schemas;
 
     public Schema( String schema ) {
-        this.schemaConfig = schema;
         schemas = new HashMap<>();
         Arrays.asList(schema.split(";"))
                 .stream()
-                .forEach(flag->{
-                    String[] nameValue = flag.split(":");
-                    schemas.put(nameValue[0],nameValue[1]);
+                .forEach(flags -> {
+                    String[] names = flags.split(":");
+                    schemas.put(names[0], names[1]);
                 });
     }
 
-    public Object getValue( String flag, String strValue) {
-        if (isNullString(strValue)) return null;
+    public Object getValue( String flag, String givenValue ) {
+        if (isEmpty(flag))
+            return null;
 
-        String type = schemas.get(flag);
-        if (isNullString(type)) return null;
-        switch (type){
+        String flagType = schemas.get(flag);
+        if (isEmpty(flagType))
+            return null;
+        switch (flagType) {
             case "boolean":
-                return "true".equalsIgnoreCase(strValue);
+                return Boolean.valueOf(givenValue);
             case "int":
-                return Integer.parseInt(strValue);
+                if (isEmpty(givenValue))
+                    return new Integer(8080);
+                return Integer.parseInt(givenValue);
             case "string":
-                return strValue;
+                return givenValue;
             case "list":
-                return Arrays.asList(strValue.split(","));
+                return givenValue.split(",");
+
+            default:
+                return null;
 
         }
-        return strValue;
     }
 
-    private boolean isNullString( String strValue ) {
-        return (null == strValue) || strValue.length()==0;
+    private boolean isEmpty( String givenValue ) {
+        return (null == givenValue || givenValue.length() == 0);
     }
 }

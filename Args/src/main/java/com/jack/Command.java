@@ -4,30 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Command {
-    private final String commandLine;
-    private Map<String,String> commands;
 
-    public Command( String commandLine ) {
-        this.commandLine = commandLine;
+    Map<String,String> commands;
+
+    public Command( String command ) {
+        String[] comm = command.split("\\s+");
         commands = new HashMap<>();
-        String[] commandLines = commandLine.split("\\s+");
-        String flag = null;
-        String value = null;
-        for(int i=0;i<commandLines.length;i++){
-            if (isFlag(commandLines[i]))
-                flag = commandLines[i];
-            if (i<commandLines.length-1 && !isFlag(commandLines[i+1]))
-                value = commandLines[++i];
 
-            commands.put(flag,value);
+        for(int i=0; i<comm.length; i++){
+            commands.put(comm[i],comm[++i]);
         }
     }
 
-    private boolean isFlag( String str ) {
-        return str.startsWith("-");
-    }
-
     public String getValue( String flag ) {
-        return commands.get(flag);
+        String value = commands.get(flag);
+        return value == null ? "" : value;
     }
 }
