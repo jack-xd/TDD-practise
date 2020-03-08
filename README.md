@@ -90,3 +90,7 @@ g标记对应的是字符串类型的列表（[“this”, “is”, “a”, �
 
 你需要自己判断，是否采纳这些需求。
 
+## More
+
+在 http://codingdojo.org/kata/ 找到更多的练习题目（Kata）
+

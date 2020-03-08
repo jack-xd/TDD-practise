@@ -40,10 +40,20 @@ public class MarsRover {
                         default:
                             //do nothing
                         case 'f':
-                            goForward(moveCommand.substring(1));
+                            try {
+                                goForward(moveCommand.substring(1));
+                            } catch (WrongCommandException e) {
+                                stopNow();
+                                return;
+                            }
                             break;
                         case 'b':
-                            goBackward(moveCommand.substring(1));
+                            try {
+                                goBackward(moveCommand.substring(1));
+                            } catch (WrongCommandException e) {
+                                stopNow();
+                                return;
+                            }
                             break;
                         case 'l':
                             updateDegree(-90);
@@ -53,6 +63,11 @@ public class MarsRover {
                             break;
                     }
                 });
+    }
+
+    private void stopNow() {
+        System.out.println(this.getStatus());
+        throw new RuntimeException();
     }
 
     private void updateDegree( int degree ) {
@@ -79,15 +94,14 @@ public class MarsRover {
                 this.myDirection = "S";
                 break;
         }
-
     }
 
 
-    private void goBackward( String move ) {
+    private void goBackward( String move ) throws WrongCommandException {
         goForward("-" + move);
     }
 
-    private void goForward( String move ) {
+    private void goForward( String move ) throws WrongCommandException {
         int step = Integer.parseInt(move);
         switch (myDirection) {
             default:
@@ -105,6 +119,29 @@ public class MarsRover {
                 this.myX += step;
                 break;
         }
+
+        checkMyStatus();
+    }
+
+    private void checkMyStatus() throws WrongCommandException {
+        boolean something_wrong=false;
+        if (this.myX > RegionX){
+            this.myX = RegionX;
+            something_wrong = true;
+        }
+        if (this.myX < 0 ){
+            this.myX = 0;
+            something_wrong = true;
+        }
+        if (this.myY > RegionY){
+            this.myY = RegionY;
+            something_wrong = true;
+        }
+        if (this.myY < 0){
+            this.myY = 0;
+            something_wrong = true;
+        }
+        if(something_wrong) throw new WrongCommandException();
 
     }
 
