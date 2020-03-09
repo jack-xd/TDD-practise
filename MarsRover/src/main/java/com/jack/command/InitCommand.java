@@ -1,4 +1,7 @@
-package com.jack;
+package com.jack.command;
+
+import com.jack.RoverState;
+import com.jack.WrongCommandException;
 
 public class InitCommand extends Command {
 
@@ -8,7 +11,7 @@ public class InitCommand extends Command {
     }
 
     @Override
-    protected RoverState updateRoverState( RoverState state, String command ) {
+    public RoverState updateRoverState( RoverState state, String command ) {
         String[] inits = command.split(",");
 
         state.setMyDirection(inits[2]);

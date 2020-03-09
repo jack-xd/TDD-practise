@@ -1,5 +1,7 @@
 package com.jack;
 
+import com.jack.command.Command;
+
 import java.util.Arrays;
 
 public class MarsRover {
@@ -21,11 +23,6 @@ public class MarsRover {
         comm = Command.createCommand(flag[0]);
         comm.updateRoverState(myState,flag[1]);
 
-    }
-
-    private void stopNow() {
-        System.out.println(this.getStatus());
-        throw new RuntimeException();
     }
 
     public String getStatus() {

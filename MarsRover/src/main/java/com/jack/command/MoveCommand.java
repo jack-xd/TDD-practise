@@ -1,4 +1,7 @@
-package com.jack;
+package com.jack.command;
+
+import com.jack.RoverState;
+import com.jack.WrongCommandException;
 
 import java.util.Arrays;
 
@@ -9,7 +12,7 @@ public class MoveCommand extends Command {
     }
 
     @Override
-    protected RoverState updateRoverState( RoverState state, String command ) {
+    public RoverState updateRoverState( RoverState state, String command ) {
         Arrays.asList(command.split(","))
                 .stream()
                 .forEach(moveCommand -> {

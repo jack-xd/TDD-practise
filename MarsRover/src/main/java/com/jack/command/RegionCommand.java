@@ -1,4 +1,6 @@
-package com.jack;
+package com.jack.command;
+
+import com.jack.RoverState;
 
 public class RegionCommand extends Command {
     @Override
@@ -7,7 +9,7 @@ public class RegionCommand extends Command {
     }
 
     @Override
-    protected RoverState updateRoverState( RoverState state, String command ) {
+    public RoverState updateRoverState( RoverState state, String command ) {
         String[] regions = command.split(",");
         state.setRegionX(Integer.parseInt(regions[0]));
         state.setRegionY(Integer.parseInt(regions[1]));
